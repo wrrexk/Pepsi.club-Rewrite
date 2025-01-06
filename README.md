@@ -9,7 +9,7 @@ How to Use:
 #:
 
 ```
-loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
+loadstring(game:HttpGet("https://github.com/wrrexk/Pepsi.club-Rewrite/raw/refs/heads/main/kryx.gg"))()
 
 ```
 
