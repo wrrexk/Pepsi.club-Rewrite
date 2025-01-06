@@ -9,10 +9,10 @@ How to Use:
 #:
 
 ```
-
 --name changer
 local username = "NAME HERE"
 
+local DisplayName = "DISPLAY NAME"
 
 local plr = game.Players.LocalPlayer
 plr.DisplayName = username
@@ -22,7 +22,6 @@ plr.Name = username
 --script--
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
-
 ```
 
 
