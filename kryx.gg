@@ -10,7 +10,6 @@ local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/savemanger%20rewrite.lua"))()
-local LuaLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/Pepsi.club-Rewrite/refs/heads/main/lualoader"))()
 
 if not isfolder("kryx.cc//main/kryxlua") then
     makefolder("kryx.cc/main/kryxlua")
