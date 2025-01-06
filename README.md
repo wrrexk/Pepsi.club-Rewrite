@@ -10,6 +10,8 @@ How to Use:
 
 ```
 
+local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
+
 loadstring(game:HttpGet("local allowedGameIDs = {
     [301549746] = true
 }
@@ -17,10 +19,10 @@ loadstring(game:HttpGet("local allowedGameIDs = {
 local currentGameID = game.PlaceId
 
 if allowedGameIDs[currentGameID] then
-    print("Welcome to CB -wrrexk")
+    Library:Notify('Welcome to Counter Blox -wrrexk');
     loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
 else
-    print("scripts for counter blox aint shit else to use it for")
+    Library:Notify('the script is for counter blox');
 end"))()
 
 ```
