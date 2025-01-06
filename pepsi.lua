@@ -9,7 +9,7 @@ local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main
 ------------------------------------ LINKS ------------------------------------
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
-local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/savemanger%20rewrite.lua"))()
 
 Library:Notify('Loading UI...');
 wait(3)
