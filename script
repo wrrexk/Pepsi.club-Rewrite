@@ -1,2 +1,2 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/Pepsi.club-Rewrite/refs/heads/main/username%20id%20changer"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/Pepsi.club-Rewrite/refs/heads/main/pepsi.lua"))()
