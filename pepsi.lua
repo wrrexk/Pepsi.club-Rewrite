@@ -1,6 +1,24 @@
------------------------------------- HOL UP ------------------------------------
+------------------------------------ TY WRREXK ------------------------------------
 repeat wait() until game:IsLoaded()
 local LoadingTime = tick();
+
+
+
+-- Define the target game ID
+local allowedGameID = 301549746
+
+-- Get the current game's ID
+local currentGameID = game.PlaceId
+
+-- Check if the current game is allowed
+if currentGameID == allowedGameID then
+    print("Game is allowed. Executing script...")
+
+    -- Your script here
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
+else
+
+
 
 LPH_NO_VIRTUALIZE = function(a) return a end
 LPH_NO_UPVALUES = function(a) return a end
@@ -2283,3 +2301,7 @@ end)
 
 Library:Notify('Finished Loading! Welcome ' ..localPlayer.Name.. ' to pepsi.club fix by wrrexk on discord!');
 Library:Notify("Took to load "..string.format("%.5f", tick() - LoadingTime).." seconds.");
+
+else
+    print("@wrrexk for cb rewrite woohoo")
+end
