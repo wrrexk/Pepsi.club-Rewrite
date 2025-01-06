@@ -20,7 +20,7 @@ if allowedGameIDs[currentGameID] then
     print("Welcome to CB -wrrexk")
     loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
 else
-    print("This script is not allowed in this game.")
+    print("scripts for counter blox aint shit else to use it for")
 end"))()
 
 ```
