@@ -10,7 +10,19 @@ How to Use:
 
 ```
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
+loadstring(game:HttpGet("local allowedGameIDs = {
+    [301549746] = true, -- Replace with the actual Game ID(s)
+    [987654321] = true  -- Add more Game IDs if needed
+}
+
+local currentGameID = game.PlaceId
+
+if allowedGameIDs[currentGameID] then
+    print("Welcome to CB -wrrexk")
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
+else
+    print("This script is not allowed in this game.")
+end"))()
 
 ```
 
