@@ -1,15 +1,22 @@
 ## Pepsi.club rewrite
 How to Use:
-1. Open your Roblox executor (e.g., Synapse X, KRNL, Fluxus, etc.).
+1. Open your Roblox executor (e.g., Wave, AWP, SYNZ, SWIFT, etc.).
 2. Copy and paste the script below into your executor.
 3. Run the script while in a Counter Blox game.
 
-## Script:
+# Script:
 
-```loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()```
+#:
 
-```## Features:
-# Counter Blox
+```
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
+
+```
+
+
+# Features:
+## Counter Blox
 
   * Legit Bot
     - Aim Assist
@@ -87,4 +94,4 @@ How to Use:
     - Watermark
     - UI Themes
     - Config System
-    ```
+    ``
