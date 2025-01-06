@@ -4,8 +4,16 @@ local LoadingTime = tick();
 
 
 
--- Define the target game ID
-local allowedGameID = 301549746
+-- This is to make the game counter blox rewrite only
+-- if you got another game just add it
+
+----------------------------- -- TEMPLATE TO ADD IDS ------------------------------
+--[[
+ [ADD YOUR GAME ID] = true,
+]]
+
+
+
 
 -- Get the current game's ID
 local currentGameID = game.PlaceId
@@ -2301,7 +2309,3 @@ end)
 
 Library:Notify('Finished Loading! Welcome ' ..localPlayer.Name.. ' to pepsi.club fix by wrrexk on discord!');
 Library:Notify("Took to load "..string.format("%.5f", tick() - LoadingTime).." seconds.");
-
-else
-    print("@wrrexk for cb rewrite woohoo")
-end
