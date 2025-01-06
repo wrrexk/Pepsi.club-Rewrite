@@ -1,0 +1,104 @@
+local httpService = game:GetService('HttpService')
+
+local LuaLoader = {} do
+    LuaLoader.Folder = 'LuaScripts'  -- Folder where Lua scripts are stored
+    LuaLoader.Ignore = {}
+    LuaLoader.Parser = {
+        -- Dropdown: Load Lua Script
+        Dropdown = {
+            Save = function(idx, object)
+                return { type = 'Dropdown', idx = idx, value = object.Value }
+            end,
+            Load = function(idx, data)
+                if Options[idx] then
+                    Options[idx]:SetValue(data.value)
+                end
+            end,
+        },
+    }
+
+    -- Function to load Lua script names into the dropdown
+    function LuaLoader:LoadScriptNames()
+        local scriptFiles = listfiles(self.Folder)  -- Get the list of files in the Lua script folder
+        local scriptNames = {}
+
+        for _, file in ipairs(scriptFiles) do
+            if file:sub(-4) == ".lua" then  -- Only Lua files
+                local scriptName = file:match("([^/\\]+)%.lua$")
+                if scriptName then
+                    table.insert(scriptNames, scriptName)
+                end
+            end
+        end
+
+        return scriptNames
+    end
+
+    -- Function to refresh script list in the dropdown
+    function LuaLoader:RefreshScriptList()
+        local list = LuaLoader:LoadScriptNames()
+        return list
+    end
+
+    -- Function to load and execute Lua script
+    function LuaLoader:LoadAndExecuteScript(scriptName)
+        local scriptPath = self.Folder .. '/' .. scriptName .. '.lua'
+        local success, content = pcall(function()
+            return readfile(scriptPath)
+        end)
+
+        if not success then
+            return false, "Failed to read the script: " .. content
+        end
+
+        -- Execute the Lua script content
+        local successExec, err = pcall(function()
+            loadstring(content)()
+        end)
+
+        if not successExec then
+            return false, "Failed to execute the script: " .. err
+        end
+
+        return true, "Script executed successfully!"
+    end
+
+    -- Function to build the Lua Loader UI section
+    function LuaLoader:BuildLuaLoaderSection(tab)
+        local section = tab:AddRightGroupbox('Lua Loader')
+
+        section:AddDropdown('LuaLoader_ScriptList', { Text = 'Lua Scripts', Values = self:RefreshScriptList(), AllowNull = true })
+        section:AddButton('Load Script', function()
+            local selectedScript = Options.LuaLoader_ScriptList.Value
+
+            if not selectedScript or selectedScript == "" then
+                return self.Library:Notify("Please select a valid Lua script", 2)
+            end
+
+            local success, message = self:LoadAndExecuteScript(selectedScript)
+            if success then
+                self.Library:Notify(message)
+            else
+                self.Library:Notify(message, 2)
+            end
+        end)
+    end
+
+    -- Set up folder structure for Lua scripts
+    function LuaLoader:BuildFolderTree()
+        local paths = {
+            self.Folder
+        }
+
+        for _, path in ipairs(paths) do
+            if not isfolder(path) then
+                makefolder(path)
+            end
+        end
+    end
+
+    -- Initialize LuaLoader
+    LuaLoader:BuildFolderTree()
+end
+
+return LuaLoader
