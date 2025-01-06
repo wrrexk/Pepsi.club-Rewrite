@@ -63,26 +63,6 @@ local LuaLoader = {} do
         return true, "Script executed successfully!"
     end
 
-    -- Function to build the Lua Loader UI section
-    function LuaLoader:BuildLuaLoaderSection(tab)
-        local section = tab:AddRightGroupbox('Lua Loader')
-
-        section:AddDropdown('LuaLoader_ScriptList', { Text = 'Lua Scripts', Values = self:RefreshScriptList(), AllowNull = true })
-        section:AddButton('Load Script', function()
-            local selectedScript = Options.LuaLoader_ScriptList.Value
-
-            if not selectedScript or selectedScript == "" then
-                return self.Library:Notify("Please select a valid Lua script", 2)
-            end
-
-            local success, message = self:LoadAndExecuteScript(selectedScript)
-            if success then
-                self.Library:Notify(message)
-            else
-                self.Library:Notify(message, 2)
-            end
-        end)
-    end
 
     -- Set up folder structure for Lua scripts
     function LuaLoader:BuildFolderTree()
