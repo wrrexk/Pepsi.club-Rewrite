@@ -11,8 +11,7 @@ How to Use:
 ```
 
 loadstring(game:HttpGet("local allowedGameIDs = {
-    [301549746] = true, -- Replace with the actual Game ID(s)
-    [987654321] = true  -- Add more Game IDs if needed
+    [301549746] = true
 }
 
 local currentGameID = game.PlaceId
