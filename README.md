@@ -10,20 +10,18 @@ How to Use:
 
 ```
 
-local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
+--name changer
+local username = "NAME HERE"
 
-loadstring(game:HttpGet("local allowedGameIDs = {
-    [301549746] = true
-}
 
-local currentGameID = game.PlaceId
+local plr = game.Players.LocalPlayer
+plr.DisplayName = username
+plr.Name = username
 
-if allowedGameIDs[currentGameID] then
-    Library:Notify('Welcome to Counter Blox -wrrexk');
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
-else
-    Library:Notify('the script is for counter blox');
-end"))()
+
+--script--
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/pepsi.lua"))()
 
 ```
 
