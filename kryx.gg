@@ -10,12 +10,17 @@ local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
 local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/pepsi-config-fix/refs/heads/main/savemanger%20rewrite.lua"))()
+local LuaLoader = loadstring(game:HttpGet("https://raw.githubusercontent.com/wrrexk/Pepsi.club-Rewrite/refs/heads/main/lualoader"))()
 
-Library:Notify('Loading UI...');
+if not isfolder("kryx.cc//main/kryxlua") then
+    makefolder("kryx.cc/main/kryxlua")
+end
+
+Library:Notify('Loading...');
 wait(3)
 ------------------------------------ WINDOW -----------------------------------
 local Window = Library:CreateWindow({
-    Title = 'pepsi.club',
+    Title = 'kryx.cc',
     Center = true, 
     AutoShow = true,
 })
@@ -25,6 +30,8 @@ local Tabs = {
     Visuals = Window:AddTab('Visuals'),
     Misc = Window:AddTab('Misc'),
     ['UI Settings'] = Window:AddTab('Settings'),
+    Extras = Window:AddTab('Extra'),
+    Luascripts = Window:AddTab('Luas'), 
 }
 ------------------------------------ SECTIONS ------------------------------------
 local AimbotSec1 = Tabs.Legitbot:AddLeftGroupbox('Bullet Redirection')
@@ -54,6 +61,12 @@ local MiscSec5 = Tabs.Misc:AddRightGroupbox('Others')
 local MiscSec6 = Tabs.Misc:AddLeftGroupbox('Gun Mods')
 
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
+
+local ExtraSec1 = Tabs.Extras:AddLeftGroupbox('Extra')
+local ExtraSec2 = Tabs.Extras:AddRightGroupbox('Name/ID Changer')
+
+local LuaSec1 = Tabs.Luascripts:AddLeftGroupbox('Lua Scripts')
+local LuaSec2 = Tabs.Luascripts:AddRightGroupbox('Built in')
 ------------------------------------ VARS ------------------------------------
 local players = game:GetService("Players")
 local localPlayer = players.LocalPlayer
@@ -62,6 +75,7 @@ local currentCamera = workspace.CurrentCamera
 local guiService = game:GetService("GuiService")
 local runService = game:GetService("RunService")
 local lighting = game.Lighting
+local kryxluaScripts = {}
 local mouse = localPlayer:GetMouse()
 local userInput = game:GetService('UserInputService')
 local TweenService = game:GetService("TweenService")
@@ -109,8 +123,88 @@ local SkyboxesTable = {
 		SkyboxDn = "http://www.roblox.com/asset/?id=7950570785",
 		SkyboxFt = "http://www.roblox.com/asset/?id=7950572449",
 		SkyboxRt = "http://www.roblox.com/asset/?id=7950575055",
-		SkyboxUp = "http://www.roblox.com/asset/?id=7950627627"
-    }
+	    SkyboxUp = "http://www.roblox.com/asset/?id=7950627627"
+    },
+    ["Purple Nebula"] = {
+        SkyboxBk = "rbxassetid://159454299",
+            SkyboxDn = "rbxassetid://159454296",
+            SkyboxFt = "rbxassetid://159454293",
+            SkyboxLf = "rbxassetid://159454286",
+            SkyboxRt = "rbxassetid://159454300",
+            SkyboxUp = "rbxassetid://159454288"
+    },
+    ["Night Sky"] = {
+            SkyboxBk = "rbxassetid://12064107",
+            SkyboxDn = "rbxassetid://12064152",
+            SkyboxFt = "rbxassetid://12064121",
+            SkyboxLf = "rbxassetid://12063984",
+            SkyboxRt = "rbxassetid://12064115",
+            SkyboxUp = "rbxassetid://12064131"
+    },
+    ["Pink Daylight"] = {
+            SkyboxBk = "rbxassetid://271042516",
+            SkyboxDn = "rbxassetid://271077243",
+            SkyboxFt = "rbxassetid://271042556",
+            SkyboxLf = "rbxassetid://271042310",
+            SkyboxRt = "rbxassetid://271042467",
+            SkyboxUp = "rbxassetid://271077958"
+    },
+    ["Morning Glow"] = {
+            SkyboxBk = "rbxassetid://1417494030",
+            SkyboxDn = "rbxassetid://1417494146",
+            SkyboxFt = "rbxassetid://1417494253",
+            SkyboxLf = "rbxassetid://1417494402",
+            SkyboxRt = "rbxassetid://1417494499",
+            SkyboxUp = "rbxassetid://1417494643"
+    },
+    ["Setting Sun"] = {
+            SkyboxBk = "rbxassetid://626460377",
+            SkyboxDn = "rbxassetid://626460216",
+            SkyboxFt = "rbxassetid://626460513",
+            SkyboxLf = "rbxassetid://626473032",
+            SkyboxRt = "rbxassetid://626458639",
+            SkyboxUp = "rbxassetid://626460625"
+    },
+    ["Fade Blue"] = {
+            SkyboxBk = "rbxassetid://153695414",
+            SkyboxDn = "rbxassetid://153695352",
+            SkyboxFt = "rbxassetid://153695452",
+            SkyboxLf = "rbxassetid://153695320",
+            SkyboxRt = "rbxassetid://153695383",
+            SkyboxUp = "rbxassetid://153695471"
+    },
+    ["Elegant Morning"] = {
+            SkyboxBk = "rbxassetid://153767241",
+            SkyboxDn = "rbxassetid://153767216",
+            SkyboxFt = "rbxassetid://153767266",
+            SkyboxLf = "rbxassetid://153767200",
+            SkyboxRt = "rbxassetid://153767231",
+            SkyboxUp = "rbxassetid://153767288"
+    },
+    ["Neptune"] = {
+            SkyboxBk = "rbxassetid://218955819",
+            SkyboxDn = "rbxassetid://218953419",
+            SkyboxFt = "rbxassetid://218954524",
+            SkyboxLf = "rbxassetid://218958493",
+            SkyboxRt = "rbxassetid://218957134",
+            SkyboxUp = "rbxassetid://218950090"
+    },
+    ["Redshift"] = {
+            SkyboxBk = "rbxassetid://401664839",
+            SkyboxDn = "rbxassetid://401664862",
+            SkyboxFt = "rbxassetid://401664960",
+            SkyboxLf = "rbxassetid://401664881",
+            SkyboxRt = "rbxassetid://401664901",
+            SkyboxUp = "rbxassetid://401664936"
+    },
+    ["Aesthetic Night"] = {
+            SkyboxBk = "rbxassetid://1045964490",
+            SkyboxDn = "rbxassetid://1045964368",
+            SkyboxFt = "rbxassetid://1045964655",
+            SkyboxLf = "rbxassetid://1045964655",
+            SkyboxRt = "rbxassetid://1045964655",
+            SkyboxUp = "rbxassetid://1045962969"
+     }
 }
 
 local saturationeffect = Instance.new("ColorCorrectionEffect", currentCamera)
@@ -132,8 +226,6 @@ local ebcount = 0
 local graphLines = {}
 local lastPos = currentCamera.ViewportSize.Y-90
 
-local HitSoundType = 3124331820
-local KillSoundType = 5902468562
 ------------------------------------ GUI STUFF ------------------------------------
 local watermark = Instance.new("ScreenGui")
 local ScreenLabel = Instance.new("Frame")
@@ -185,7 +277,7 @@ Text.Position = UDim2.new(0.0230768919, 0, 0, 0)
 Text.Size = UDim2.new(0.48046875, 0, 1, 0)
 Text.ZIndex = 4
 Text.Font = Enum.Font.RobotoMono
-Text.Text = "pepsi.club | user"
+Text.Text = "Kryx.cc | Skid"
 Text.TextColor3 = C3(65025, 65025, 65025)
 Text.TextSize = 14.000
 Text.TextStrokeTransparency = 0.000
@@ -1043,7 +1135,7 @@ WRLTab:AddSlider('wrl_saturationvalue', {Text = 'Value', Default = 0, Min = 0, M
 end)
 
 WRLTab:AddToggle('wrl_skyboxenabled', {Text = 'Skybox', Default = false}):OnChanged(function() end)
-WRLTab:AddDropdown('wrl_skyboxtype', {Values = {"Galaxy","Pink Sky","Sunset","Night","Evening"}, Default = 1, Multi = false, Text = 'Selected'})
+WRLTab:AddDropdown('wrl_skyboxtype', {Values = {"Galaxy","Pink Sky","Sunset","Night","Evening","Purple Nebula","Night Sky","Pink Daylight","Morning Glow","Setting Sun","Fade Blue","Elegant Morning","Neptune","Redshift","Aesthetic Night"}, Default = 1, Multi = false, Text = 'Selected'})
 Options.wrl_skyboxtype:OnChanged(function()
     if Toggles.wrl_skyboxenabled.Value == true then
         local pepsisky = lighting:FindFirstChild("pepsisky") or Instance.new("Sky")
@@ -1201,7 +1293,7 @@ Toggles.misc_lastvk:OnChanged(function()
     end
 end)
 
---[[MiscSec1:AddToggle('misc_spam', {Text = 'Spam Chat', Default = false})
+MiscSec1:AddToggle('misc_spam', {Text = 'Spam Chat', Default = false})
 Toggles.misc_spam:OnChanged(function()
     
 end)
@@ -1216,7 +1308,7 @@ Options.misc_spamtype:OnChanged(function()
     elseif Options.misc_spamtype.Value == "Godlike" then
         ebsfx = 7463103082
     end
-end)]]
+end)
 
 MiscSec2:AddToggle('mov_bhop', {Text = 'Bunny Hop', Default = false})
 MiscSec2:AddSlider('mov_bhopspeed', {Text = 'Bhop Speed', Default = 25, Min = 1, Max = 150, Rounding = 0, Compact = false})
@@ -1347,12 +1439,12 @@ end)
 
 MiscSec4:AddToggle('hit_killsound', {Text = 'Kill Sound', Default = false})
 MiscSec4:AddDropdown('hit_killsoundtype', {Values = {'1 Sit', 'UltraKill', 'Minecraft'}, Default = 1, Multi = false, Text = 'Kill Sound Type'})
-Options.hit_hitsoundtype:OnChanged(function()
-    if Options.hit_hitsoundtype.Value == "1 Sit" then
+Options.hit_killsoundtype:OnChanged(function()  -- This should be 'hit_killsoundtype' instead of 'hit_hitsoundtype'
+    if Options.hit_killsoundtype.Value == "1 Sit" then
         KillSoundType = 5902468562
-    elseif Options.hit_hitsoundtype.Value == "UltraKill" then
+    elseif Options.hit_killsoundtype.Value == "UltraKill" then
         KillSoundType = 937885646
-    elseif Options.hit_hitsoundtype.Value == "Minecraft" then
+    elseif Options.hit_killsoundtype.Value == "Minecraft" then
         KillSoundType = 6705984236
     end
 end)
@@ -1361,12 +1453,152 @@ MiscSec4:AddToggle('hit_hitmarker', {Text = 'Hit Marker', Default = false}):AddC
 MiscSec4:AddToggle('hit_killsay', {Text = 'Kill Say', Default = false})
 MiscSec4:AddInput('killsay_msg', {Default = 'sit', Numeric = false, Finished = false, Text = 'Message', Placeholder = 'Message'})
 
-MiscSec5:AddButton('Anti Blood Lag', function() 
-    local senv = getsenv(localPlayer.PlayerGui.Client)senv.splatterBlood = function() end
-end)
+
+
+
 
 MiscSec6:AddToggle('mod_spread', {Text = 'No Spread', Default = false})
 MiscSec6:AddToggle('mod_recoil', {Text = 'No Recoil', Default = false})
+
+
+
+--[[ExtraSec2:AddToggle('display_namechanged', {Text = 'Name/ID Changer V2', Default = false})
+Toggles.display_namechanged:OnChanged(function()
+    
+end)
+ExtraSec2:AddDropdown('display_newname', {Values = {'wrrexk', 'kryx', "Ion CB", "Sjors", "kryx.cc", ".gg/kryx", "pepsi.club", "femboy", "zuhn"}, Default = 1, Multi = false, Text = 'Name (SUPER LAGGY)'})
+Options.display_newname:OnChanged(function()
+
+    if Options.display_newname.Value == "wrrexk" then
+        namechange = "wrrexk"
+        idchange = "1603688493"
+    elseif Options.display_newname.Value == "kryx" then
+        namechange = "kryx"
+        idchange = ""
+    elseif Options.display_newname.Value == "ion_lol" then
+        namechange = "ion_lol"
+        idchange = "619962434"
+    elseif Options.display_newname.Value == "Sjors" then
+        namechange = "Sjors"
+        idchange = "83335331"
+    elseif Options.display_newname.Value == "kryx.cc" then
+        namechange = "kryx.cc"
+        idchange = ""
+    elseif Options.display_newname.Value == ".gg/kryx" then
+        namechange = ".gg/kryx"
+        idchange = ""
+    elseif Options.display_newname.Value == "pepsi.club" then
+        namechange = "pepsi.club"
+        idchange = ""
+    elseif Options.display_newname.Value == "femboy" then
+        namechange = "femboy"
+        idchange = ""
+    elseif Options.display_newname.Value == "zuhn" then
+        namechange = "zuhnCB"
+        idchange = "781247686"
+    end
+end)]]
+
+ExtraSec1:AddButton('Anti Blood Lag', function() 
+    local senv = getsenv(localPlayer.PlayerGui.Client)senv.splatterBlood = function() end
+end)
+
+ExtraSec2:AddToggle('display_namechanger', {Text = 'Name/ID Changer', Default = false})
+Toggles.display_namechanger:OnChanged(function()
+    
+end)
+ExtraSec2:AddDropdown('display_namenew', {Values = {'wrrexk', 'kryx', "Ion CB", "Sjors", "kryx.cc", ".gg/kryx", "pepsi.club", "femboy", "zuhn"}, Default = 1, Multi = false, Text = 'Name'})
+Options.display_namenew:OnChanged(function()
+
+    if Options.display_namenew.Value == "wrrexk" then
+    game.Players.LocalPlayer.Name = "wrrexk"
+    game.Players.LocalPlayer.DisplayName = "wrrexk"
+    game:GetService("Players").LocalPlayer.UserId = 1603688493
+
+    elseif Options.display_namenew.Value == "kryx" then
+    game.Players.LocalPlayer.Name = "kryx"
+    game.Players.LocalPlayer.DisplayName = "kryx"
+    game:GetService("Players").LocalPlayer.UserId = 14200614
+
+    elseif Options.display_display_namenew.Value == "ion_lol" then
+    game.Players.LocalPlayer.Name = "ion_lol"
+    game.Players.LocalPlayer.DisplayName = "ion_lol"
+    game:GetService("Players").LocalPlayer.UserId = 619962434
+
+    elseif Options.display_display_namenew.Value == "Sjors" then
+    game.Players.LocalPlayer.Name = "Sjors"
+    game.Players.LocalPlayer.DisplayName = "Sjors"
+    game:GetService("Players").LocalPlayer.UserId = 83335331
+
+    elseif Options.display_display_namenew.Value == "kryx.cc" then
+    game.Players.LocalPlayer.Name = "kryx.cc"
+    game.Players.LocalPlayer.DisplayName = "kryx.cc"
+    game:GetService("Players").LocalPlayer.UserId = 857204
+
+    elseif Options.display_display_namenew.Value == ".gg/kryx" then
+    game.Players.LocalPlayer.Name = ".gg/kryx"
+    game.Players.LocalPlayer.DisplayName = ".gg/kryx"
+    game:GetService("Players").LocalPlayer.UserId = 857204
+    
+    elseif Options.display_display_namenew.Value == "pepsi.club" then
+    game.Players.LocalPlayer.Name = "pepsi.club"
+    game.Players.LocalPlayer.DisplayName = "pepsi.club"
+    game:GetService("Players").LocalPlayer.UserId = 857204
+
+    elseif Options.display_display_namenew.Value == "femboy" then
+    game.Players.LocalPlayer.Name = "femboy"
+    game.Players.LocalPlayer.DisplayName = "femboy"
+    game:GetService("Players").LocalPlayer.UserId = 7679633319
+
+    elseif Options.display_display_namenew.Value == "zuhn" then
+    game.Players.LocalPlayer.Name = "zuhnCB"
+    game.Players.LocalPlayer.DisplayName = "zuhnCB"
+    game:GetService("Players").LocalPlayer.UserId = 781247686
+    end
+end)
+
+LuaSec1:AddDropdown('kryxlua_dropdown', { Text = 'Luas', Values = kryxluaScripts, AllowNull = true })
+LuaSec1:AddButton('Load Script', function()
+    local selectedScript = Options.kryxlua_dropdown.Value
+
+    if not selectedScript or selectedScript == "" then
+        return Library:Notify("Please select a valid Lua script", 2)
+    end
+
+    local scriptPath = "kryx.cc/main/kryxlua/" .. selectedScript
+    if isfile(scriptPath) then
+        local scriptContent = readfile(scriptPath)
+
+        local success, err = pcall(loadstring(scriptContent))
+        if success then
+            Library:Notify("Loaded script successfully")
+        else
+            Library:Notify("Error loading script: " .. err, 2)
+        end
+    else
+        Library:Notify("Script file not found", 2)
+    end
+end)
+
+LuaSec1:AddButton('Refresh List', function()
+    kryxluaScripts = {}
+    for _, luaFile in pairs(listfiles("kryx.cc/main/kryxlua")) do
+        local scriptName = string.gsub(luaFile, "kryx.cc/main/kryxlua\\", "")
+        table.insert(kryxluaScripts, scriptName)
+    end
+
+    
+    Options.kryxlua_dropdown:SetValues(kryxluaScripts)
+end)
+
+LuaSec2:AddButton('Unlock All Skins', function() 
+    loadstring(game:HttpGet("https://pastebin.com/raw/Qu9inv8N", true))() 
+end)
+
+LuaSec2:AddButton('Funswapper', function() 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/Funswapper/Funswapper-Script/refs/heads/main/Variants/V1.lua", true))()
+end)
+
 --------------------------------------------------------------------------------------
 MenuGroup:AddButton('Unload', function() Library:Unload() end)
 MenuGroup:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'Menu keybind' })
@@ -1380,8 +1612,9 @@ SaveManager:IgnoreThemeSettings()
 
 SaveManager:SetIgnoreIndexes({ 'MenuKeybind' }) 
 
-ThemeManager:SetFolder('pepsi.club')
-SaveManager:SetFolder('pepsi.club/main')
+ThemeManager:SetFolder('kryx.cc')
+SaveManager:SetFolder('kryx.cc/main')
+
 
 SaveManager:BuildConfigSection(Tabs['UI Settings']) 
 
@@ -1389,7 +1622,7 @@ ThemeManager:ApplyToTab(Tabs['UI Settings'])
 
 local OthersSettings = Tabs['UI Settings']:AddRightGroupbox('Others')
 
-OthersSettings:AddInput('uinamechange', {Default = 'pepsi.club', Numeric = false, Finished = false, Text = 'Window Title', Tooltip = 'Changes window title', Placeholder = '. . .'})
+OthersSettings:AddInput('uinamechange', {Default = 'kryx.cc', Numeric = false, Finished = false, Text = 'Window Title', Tooltip = 'Changes window title', Placeholder = '. . .'})
 Options.uinamechange:OnChanged(function()
     Window:SetWindowTitle(Options.uinamechange.Value)
 end)
@@ -2196,65 +2429,306 @@ local function Misc()
     
     if Toggles.misc_oldsounds.Value then
         pcall(function()
-            if localPlayer.Character.EquippedTool.Value == "AK47" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1112730119"
-            end
-            if localPlayer.Character.EquippedTool.Value == "M4A1" then
-                localPlayer.Character.Gun.SShoot.SoundId = "rbxassetid://1665639883"
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://2515498997"
-            end
-            if localPlayer.Character.EquippedTool.Value == "Glock" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1112951656"
-            end
-            if localPlayer.Character.EquippedTool.Value == "Galil" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://344800912"
-            end
-            if localPlayer.Character.EquippedTool.Value == "USP" then
-                localPlayer.Character.Gun.SShoot.SoundId = "rbxassetid://1112952739"
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://2515499360"
-            end
-            if localPlayer.Character.EquippedTool.Value == "P2000" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://263589107"
-            end
-            if  localPlayer.Character.EquippedTool.Value == "P250" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://340365431"
-            end
-            if localPlayer.Character.EquippedTool.Value == "DesertEagle" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://202918645"
-            end
-            if localPlayer.Character.EquippedTool.Value == "MP9" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://222888810"
-            end
-            if localPlayer.Character.EquippedTool.Value == "UMP" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://206953341"
-            end
-            if localPlayer.Character.EquippedTool.Value == "Famas" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://206953280"
-            end
-            if localPlayer.Character.EquippedTool.Value == "Scout" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1112858108"
-            end
-            if localPlayer.Character.EquippedTool.Value == "AUG" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://515215839"
-            end
-            if localPlayer.Character.EquippedTool.Value == "AWP" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://202918637"
-            end
-            if localPlayer.Character.EquippedTool.Value == "G3SG1" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://340365815"
-            end
-            if localPlayer.Character.EquippedTool.Value == "SG" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://347270113"
-            end
-            if localPlayer.Character.EquippedTool.Value == "M4A4" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://202918741"
-            end
-            if localPlayer.Character.EquippedTool.Value == "Tec9" then
-                localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://206953317"
+            local equippedTool = localPlayer.Character.EquippedTool
+            if equippedTool then
+                if equippedTool.Name == "AK47" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1112730119"
+                elseif equippedTool.Name == "M4A1" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1665639883"
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://2515498997"
+                elseif equippedTool.Name == "Glock" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1112951656"
+                elseif equippedTool.Name == "Galil" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://344800912"
+                elseif equippedTool.Name == "USP" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1112952739"
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://2515499360"
+                elseif equippedTool.Name == "P2000" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://263589107"
+                elseif equippedTool.Name == "P250" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://340365431"
+                elseif equippedTool.Name == "DesertEagle" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://202918645"
+                elseif equippedTool.Name == "MP9" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://222888810"
+                elseif equippedTool.Name == "UMP" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://206953341"
+                elseif equippedTool.Name == "Famas" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://206953280"
+                elseif equippedTool.Name == "Scout" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://1112858108"
+                elseif equippedTool.Name == "AUG" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://515215839"
+                elseif equippedTool.Name == "AWP" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://202918637"
+                elseif equippedTool.Name == "G3SG1" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://340365815"
+                elseif equippedTool.Name == "SG" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://347270113"
+                elseif equippedTool.Name == "M4A4" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://202918741"
+                elseif equippedTool.Name == "Tec9" then
+                    localPlayer.Character.Gun.Shoot.SoundId = "rbxassetid://206953317"
+                end
             end
         end)
     end
+    
+    if Toggles.display_namechanged.Value then
+        local new_name = namechange
+        local new_id = idchange 
+        local clear_avatar = true -- So no one can reverse search by your outfit
+        local flush_body_colors = true -- So no one can reverse search by your bodycolors
+        local rename_instances = false -- Rename any instances that holds your name. (Not recomended unless you can see your name above your character)
+        local change_id = false -- Change your player ID (not visually)
+        local deep_scan = true -- Can get a bit laggy if there is a mass wave of new instances
+        local filter_httpget = { -- Didn't seem like this would be helpful, but requested.
+            enabled = false, -- Turn on
+            result = true, -- Filter the results of the request
+            request = true -- Filter the url before requesting
+        }
 
+
+        local Players = assert(assert(game, "game missing?"):FindService("Players") or game:GetService("Players"), "Players missing?")
+        local LocalPlayer = assert(Players.LocalPlayer, "LocalPlayer missing?")
+        local CoreGui = game:FindService("CoreGui") or game:GetService("CoreGui")
+        local PlayerGui = assert(LocalPlayer:FindFirstChild("PlayerGui"), "PlayerGui mising?")
+        local RunService = assert(game:FindService("RunService") or game:GetService("RunService"), "RunService missing?")
+        local replaces_str = {
+            Players.LocalPlayer.Name
+        }
+        local replaces_num = {
+            tostring(Players.LocalPlayer.UserId)
+        }
+        new_name, new_id = tostring(new_name), tostring(new_id)
+        local function casepatt(pattern)
+            return string.gsub(pattern, "(%%?)(.)", function(percent, letter)
+                if percent ~= "" or not string.match(letter, "%a") then
+                    return percent .. letter
+                else
+                    return string.format("[%s%s]", string.lower(letter), string.upper(letter))
+                end
+            end)
+        end
+        function replace(item, fast)
+            for replacewith, data in pairs({
+                [new_name] = replaces_str,
+                [new_id] = replaces_num
+            }) do
+                if not fast then
+                    RunService.RenderStepped:Wait()
+                end
+                for _, v in pairs(data) do
+                    if not fast then
+                        RunService.RenderStepped:Wait()
+                    end
+                    for _, t in pairs({
+                        "Text",
+                        "Message",
+                        "ToolTip",
+                        "Value"
+                    }) do
+                        pcall(function()
+                            if string.find(item[t], v, nil, true) then
+                                item[t] = string.gsub(item[t], v, replacewith)
+                            elseif string.find(item[t], string.lower(v), nil, true) then
+                                item[t] = string.gsub(item[v], string.lower(v), string.lower(replacewith))
+                            elseif string.find(item[t], string.upper(v), nil, true) then
+                                item[t] = string.gsub(item[v], string.upper(v), string.upper(replacewith))
+                            elseif string.find(string.lower(item[t]), string.lower(v), nil, true) then
+                                item[t] = string.gsub(item[v], casepatt(v), replacewith)
+                            end
+                        end)
+                        if not fast then
+                            RunService.RenderStepped:Wait()
+                        end
+                    end
+                    if not fast then
+                        RunService.RenderStepped:Wait()
+                    end
+                    if rename_instances then
+                        pcall(function()
+                            if string.find(item.Name, v, nil, true) then
+                                item.Name = string.gsub(item.Name, v, replacewith)
+                            elseif string.find(item.Name, string.lower(v), nil, true) then
+                                item.Name = string.gsub(item.Name, string.lower(v), string.lower(replacewith))
+                            elseif string.find(item.Name, string.upper(v), nil, true) then
+                                item.Name = string.gsub(item.Name, string.lower(v), string.upper(replacewith))
+                            elseif string.find(string.lower(item.Name), string.lower(v), nil, true) then
+                                item.Name = string.gsub(item.Name, casepatt(v), replacewith)
+                            end
+                        end)
+                    end
+                end
+            end
+        end
+        shared.rep = replace
+        local function scan_and_replace(fast)
+            local scan_que = {
+                CoreGui:GetDescendants(),
+                PlayerGui:GetDescendants(),
+                workspace:GetDescendants()
+            }
+            local last_break = 0
+            for _, items in pairs(scan_que) do
+                if not fast then
+                    RunService.RenderStepped:Wait()
+                end
+                for _, gui in pairs(assert(type(items) == "table" and items, "scan_que does not hold a table")) do
+                    last_break = 1 + last_break
+                    if last_break >= 6000 then
+                        RunService.RenderStepped:Wait()
+                        last_break = 0
+                    end
+                    if not fast then
+                        RunService.RenderStepped:Wait()
+                    end
+                    replace(gui, fast)
+                end
+            end
+            for _, obj in pairs(workspace:GetDescendants()) do
+                if not fast then
+                    RunService.RenderStepped:Wait()
+                end
+                replace(obj)
+            end
+        end
+        function fixchar(Character)
+            if not Character then
+                return 
+            end
+            wait(0.2)
+            RunService.RenderStepped:Wait()
+            if rename_instances then
+                Character.Name = new_name
+            end
+            if clear_avatar then
+                Players.LocalPlayer:ClearCharacterAppearance()
+            end
+            wait(0.1)
+            if flush_body_colors then
+                local bc = Character:FindFirstChildOfClass("BodyColors")
+                if bc then
+                    for _, c in pairs({
+                        "HeadColor",
+                        "LeftArmColor",
+                        "LeftLegColor",
+                        "RightArmColor",
+                        "RightLegColor",
+                        "TorsoColor"
+                    }) do
+                        bc[c] = (typeof(bc[c]) == "BrickColor" and BrickColor.Random()) or bc[c]
+                    end
+                else
+                    local h = Character:FindFirstChildOfClass("Humanoid")
+                    if h then
+                        for _, limb in pairs(Character:GetChildren()) do
+                            if limb:IsA("BasePart") and pcall(h.GetLimb, h, limb) then
+                                limb.BrickColor = BrickColor.Random()
+                            end
+                        end
+                    end
+                end
+            end
+        end
+        fixchar(Players.LocalPlayer.Character)
+        Players.LocalPlayer.CharacterAppearanceLoaded:Connect(fixchar)
+        Players.LocalPlayer.CharacterAdded:Connect(fixchar)
+        if deep_scan then
+            game.ItemChanged:Connect(function(obj, property)
+                if not rename_instances and "Name" == property then
+                    return 
+                end
+                local s, v = pcall(function()
+                    return obj[property]
+                end)
+                if s then
+                    if "string" == type(v) then
+                        for _, c in pairs(replaces_str) do
+                            RunService.RenderStepped:Wait()
+                            if string.find(obj[property], c, nil, true) then
+                                obj[property] = string.gsub(tostring(obj[property] or v), c, new_name)
+                            elseif string.find(obj[property], string.lower(c)) then
+                                obj[property] = string.gsub(tostring(obj[property] or v), string.lower(c), string.lower(new_name))
+                            elseif string.find(obj[property], string.upper(c), nil, true) then
+                                obj[property] = string.gsub(tostring(obj[property] or v), string.upper(c), string.upper(new_name))
+                            elseif string.find(string.upper(obj[property]), string.upper(c), nil, true) then
+                                obj[property] = string.gsub(tostring(obj[property] or v), casepatt(c), new_name)
+                            end
+                        end
+                        RunService.RenderStepped:Wait()
+                        for _, c in pairs(replaces_num) do
+                            RunService.RenderStepped:Wait()
+                            if string.find(obj[property], new_id) then
+                                obj[property] = string.gsub(tostring(obj[property] or v), c, new_id)
+                            end
+                        end
+                    elseif "number" == type(v) then
+                        v = tostring(obj[property] or v)
+                        for _, c in pairs(replaces_num) do
+                            RunService.RenderStepped:Wait()
+                            if string.find(v, c) then
+                                obj[property] = tonumber(tonumber(string.gsub(v, c, new_id) or obj[property]) or obj[property])
+                            end
+                        end
+                    end
+                end
+            end)
+            CoreGui.DescendantAdded:Connect(replace)
+            PlayerGui.DescendantAdded:Connect(replace)
+        end
+        local function filterstr(s)
+            for _, data in pairs({
+                [new_name] = replaces_str,
+                [new_id] = replaces_num
+            }) do
+                for c, v in pairs(data) do
+                    if string.find(s, v, nil, true) then
+                        s = string.gsub(s, v, c)
+                    elseif string.find(s, string.lower(v), nil, true) then
+                        s = string.gsub(s, string.lower(v), string.lower(c))
+                    elseif string.find(s, string.upper(v), nil, true) then
+                        s = string.gsub(s, string.upper(v), string.upper(c))
+                    elseif string.find(string.upper(s), string.upper(v), nil, true) then
+                        s = string.gsub(s, casepatt(v), c)
+                    end
+                end
+            end
+            return s
+        end
+        if filter_httpget.enabled and type(hookfunc or hookfunction or detour_function) == "function" then
+            local hget
+            hget = assert(hookfunction or hookfunc or detour_function, "Hook function required for filter_httpget")(assert(game.HttpGet, "HttpGet required for filter_httpget"), function(shelf, u, ...)
+                if filter_httpget.request then
+                    local x, e = pcall(filterstr, u)
+                    if x and e then
+                        u = e
+                    end
+                end
+                if filter_httpget.result then
+                    local result = hget(shelf, u, ...)
+                    local x, e = pcall(filterstr, result)
+                    if x and e then
+                        return e
+                    end
+                end
+                return hget(shelf, u, ...)
+            end)
+        end
+        scan_and_replace(true)
+        while wait(1) do
+            if rename_instances then
+                Players.LocalPlayer.Name = new_name
+                if Players.LocalPlayer.Character then
+                    Players.LocalPlayer.Character.Name = new_name
+                end
+            end
+            if change_id then
+                Players.LocalPlayer.UserId = tonumber(tonumber(new_id or 1) or 1)
+            end
+            scan_and_replace()
+        end
+    end
     if Toggles.mod_recoil.Value then
         cbClient.RecoilX = 0;
         cbClient.RecoilY = 0
@@ -2270,7 +2744,7 @@ local function Misc()
         cbClient.accuracy_sd = 0.000
     end
 
-    localPlayer.Cash.Value = Toggles.tweaks_cash.Value and 16000 or localPlayer.Cash.Value
+    localPlayer.Cash.Value = Toggles.tweaks_cash.Value and 6000 or localPlayer.Cash.Value
 end
 
 runService.RenderStepped:Connect(function()
@@ -2281,5 +2755,5 @@ runService.RenderStepped:Connect(function()
     do Misc() end
 end)
 
-Library:Notify('Finished Loading! Welcome ' ..localPlayer.Name.. ' to pepsi.club fix by wrrexk on discord!');
+Library:Notify('Finished Loading! Welcome ' ..localPlayer.Name.. ' to kryx.cc by wrrexk on discord!');
 Library:Notify("Took to load "..string.format("%.5f", tick() - LoadingTime).." seconds.");
