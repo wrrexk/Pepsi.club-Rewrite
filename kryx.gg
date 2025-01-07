@@ -1556,7 +1556,7 @@ Options.display_namenew:OnChanged(function()
     end
 end)
 
-LuaSec1:AddDropdown('kryxlua_dropdown', { Text = 'Luas', Values = kryxluaScripts, AllowNull = true })
+LuaSec1:AddDropdown('kryxlua_dropdown', { Text = '', Values = kryxluaScripts, AllowNull = true })
 LuaSec1:AddButton('Load Script', function()
     local selectedScript = Options.kryxlua_dropdown.Value
 
