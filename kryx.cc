@@ -62,7 +62,6 @@ local MiscSec6 = Tabs.Misc:AddLeftGroupbox('Gun Mods')
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
 
 local ExtraSec1 = Tabs.Extras:AddLeftGroupbox('Extra')
-local ExtraSec2 = Tabs.Extras:AddRightGroupbox('Name/ID Changer')
 
 local LuaSec1 = Tabs.Luascripts:AddLeftGroupbox('Lua Scripts')
 local LuaSec2 = Tabs.Luascripts:AddRightGroupbox('Built in')
@@ -1451,11 +1450,9 @@ end)
 MiscSec4:AddToggle('hit_hitmarker', {Text = 'Hit Marker', Default = false}):AddColorPicker('hit_hitmarkercolor', {Default = C3(255, 255, 255), Title = 'Hit Marker Color'})
 MiscSec4:AddToggle('hit_killsay', {Text = 'Kill Say', Default = false})
 MiscSec4:AddInput('killsay_msg', {Default = 'sit', Numeric = false, Finished = false, Text = 'Message', Placeholder = 'Message'})
-
-
-
-
-
+MiscSec5:AddButton('Anti Blood Lag', function() 
+    local senv = getsenv(localPlayer.PlayerGui.Client)senv.splatterBlood = function() end
+end)
 MiscSec6:AddToggle('mod_spread', {Text = 'No Spread', Default = false})
 MiscSec6:AddToggle('mod_recoil', {Text = 'No Recoil', Default = false})
 
@@ -1498,63 +1495,6 @@ Options.display_newname:OnChanged(function()
     end
 end)]]
 
-ExtraSec1:AddButton('Anti Blood Lag', function() 
-    local senv = getsenv(localPlayer.PlayerGui.Client)senv.splatterBlood = function() end
-end)
-
-ExtraSec2:AddToggle('display_namechanger', {Text = 'Name/ID Changer', Default = false})
-Toggles.display_namechanger:OnChanged(function()
-    
-end)
-ExtraSec2:AddDropdown('display_namenew', {Values = {'wrrexk', 'kryx', "Ion CB", "Sjors", "kryx.cc", ".gg/kryx", "pepsi.club", "femboy", "zuhn"}, Default = 1, Multi = false, Text = 'Name'})
-Options.display_namenew:OnChanged(function()
-
-    if Options.display_namenew.Value == "wrrexk" then
-    game.Players.LocalPlayer.Name = "wrrexk"
-    game.Players.LocalPlayer.DisplayName = "wrrexk"
-    game:GetService("Players").LocalPlayer.UserId = 1603688493
-
-    elseif Options.display_namenew.Value == "kryx" then
-    game.Players.LocalPlayer.Name = "kryx"
-    game.Players.LocalPlayer.DisplayName = "kryx"
-    game:GetService("Players").LocalPlayer.UserId = 14200614
-
-    elseif Options.display_display_namenew.Value == "ion_lol" then
-    game.Players.LocalPlayer.Name = "ion_lol"
-    game.Players.LocalPlayer.DisplayName = "ion_lol"
-    game:GetService("Players").LocalPlayer.UserId = 619962434
-
-    elseif Options.display_display_namenew.Value == "Sjors" then
-    game.Players.LocalPlayer.Name = "Sjors"
-    game.Players.LocalPlayer.DisplayName = "Sjors"
-    game:GetService("Players").LocalPlayer.UserId = 83335331
-
-    elseif Options.display_display_namenew.Value == "kryx.cc" then
-    game.Players.LocalPlayer.Name = "kryx.cc"
-    game.Players.LocalPlayer.DisplayName = "kryx.cc"
-    game:GetService("Players").LocalPlayer.UserId = 857204
-
-    elseif Options.display_display_namenew.Value == ".gg/kryx" then
-    game.Players.LocalPlayer.Name = ".gg/kryx"
-    game.Players.LocalPlayer.DisplayName = ".gg/kryx"
-    game:GetService("Players").LocalPlayer.UserId = 857204
-    
-    elseif Options.display_display_namenew.Value == "pepsi.club" then
-    game.Players.LocalPlayer.Name = "pepsi.club"
-    game.Players.LocalPlayer.DisplayName = "pepsi.club"
-    game:GetService("Players").LocalPlayer.UserId = 857204
-
-    elseif Options.display_display_namenew.Value == "femboy" then
-    game.Players.LocalPlayer.Name = "femboy"
-    game.Players.LocalPlayer.DisplayName = "femboy"
-    game:GetService("Players").LocalPlayer.UserId = 7679633319
-
-    elseif Options.display_display_namenew.Value == "zuhn" then
-    game.Players.LocalPlayer.Name = "zuhnCB"
-    game.Players.LocalPlayer.DisplayName = "zuhnCB"
-    game:GetService("Players").LocalPlayer.UserId = 781247686
-    end
-end)
 
 LuaSec1:AddDropdown('kryxlua_dropdown', { Text = '', Values = kryxluaScripts, AllowNull = true })
 LuaSec1:AddButton('Load Script', function()
