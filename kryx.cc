@@ -1292,7 +1292,7 @@ Toggles.misc_lastvk:OnChanged(function()
     end
 end)
 
-MiscSec1:AddToggle('misc_spam', {Text = 'Spam Chat', Default = false})
+--[[MiscSec1:AddToggle('misc_spam', {Text = 'Spam Chat', Default = false})
 Toggles.misc_spam:OnChanged(function()
     
 end)
@@ -1307,7 +1307,7 @@ Options.misc_spamtype:OnChanged(function()
     elseif Options.misc_spamtype.Value == "Godlike" then
         ebsfx = 7463103082
     end
-end)
+end)]]
 
 MiscSec2:AddToggle('mov_bhop', {Text = 'Bunny Hop', Default = false})
 MiscSec2:AddSlider('mov_bhopspeed', {Text = 'Bhop Speed', Default = 25, Min = 1, Max = 150, Rounding = 0, Compact = false})
